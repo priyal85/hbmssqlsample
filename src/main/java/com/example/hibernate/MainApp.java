@@ -27,34 +27,37 @@ public class MainApp {
 
             Set<WorkingDepartment> workingDepartments = new HashSet<>();
             session.beginTransaction();
+            if (readBooleanProperty("app.create.data")) {
+                // Insert data only if the property is set to true
+                Department department = new Department("Accounting", 1);
+                department.setId(new DepartmentIdImpl(51));
+                session.save(department);
 
-          if (false)
-          {
-//            Department department = new Department("Accounting",1);
-//            department.setId(new DepartmentIdImpl(51));
-//            session.save(department);
-//
-//            WorkingDepartment workingDepartment = new WorkingDepartment();
-//            workingDepartment.setDepartment(department);
-//            workingDepartment.setCode("A15");
-//            workingDepartments.add(workingDepartment);
-//
-//            department = new Department("Welfare",2);
-//            department.setId(new DepartmentIdImpl(52));
-//            session.save(department);
-//
-              Department load = session.load(Department.class, new DepartmentIdImpl(51));
-              WorkingDepartment workingDepartment = new WorkingDepartment();
-              workingDepartment.setDepartment(load);
-              workingDepartment.setCode("B70");
-              workingDepartments.add(workingDepartment);
+                WorkingDepartment workingDepartment = new WorkingDepartment();
+                workingDepartment.setDepartment(department);
+                workingDepartment.setCode("A15");
+                workingDepartments.add(workingDepartment);
+
+              Department department2 = new Department("Welfare", 2);
+                department2.setId(new DepartmentIdImpl(52));
+                session.save(department2);
+
+              WorkingDepartment workingDepartment2 = new WorkingDepartment();
+              workingDepartment2.setDepartment(department2);
+              workingDepartment2.setCode("B70");
+              workingDepartments.add(workingDepartment2);
 
 
               Employee emp = new Employee("Paul Rifel", 55000);
-            emp.setId(new EmployeeIdImpl(11));
-            emp.setWorkingDepartments(workingDepartments);
-            session.save(emp);
-          }
+              emp.setId(new EmployeeIdImpl(11));
+              emp.setWorkingDepartments(workingDepartments);
+              session.save(emp);
+
+            }
+
+
+
+
 
           List<DepartmentIdImpl> departmentIds = new ArrayList<>();
           departmentIds.add(new DepartmentIdImpl(51));
@@ -75,6 +78,22 @@ public class MainApp {
         } finally {
             session.close();
             factory.close();
+        }
+    }
+    //write a method to read a boolean value from a properties file in resource folder named "config.properties".
+  //implement the logic to read the property value using java.util.Properties
+    //if the property is not found, return false.
+    //if the property is found, return true if the value is "true" (case
+    //insensitive), otherwise return false.
+    public static boolean readBooleanProperty(String propertyName) {
+        try {
+            java.util.Properties properties = new java.util.Properties();
+            properties.load(MainApp.class.getClassLoader().getResourceAsStream("config.properties"));
+            String value = properties.getProperty(propertyName);
+            return value != null && value.equalsIgnoreCase("true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

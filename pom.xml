@@ -24,7 +24,8 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>5.3.36.Final-redhat-00001</version>
+<!--      <version>5.3.36.Final-redhat-00001</version>-->
+      <version>5.6.15.Final</version>
     </dependency>
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
@@ -40,6 +41,11 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>1.7.36</version>
+    </dependency>
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>1.12.22</version>
     </dependency>
   </dependencies>
 </project>
